@@ -17,6 +17,7 @@ def _config_data_print():
     with open('config.txt', 'r', encoding='utf-8') as f:
         text = f.read()
         space = re.compile('[ ]*')  # regexp for one or more spaces to separate numbers form text file
+
         config_list = space.split(text)[2:5]  # 2:5 are the only numbers we need (0 - date, 1 - time)
         result = 'Config data: <br/> <br/>Latitude: {} <br/>Longitude: {} <br/>Height: {}'.\
             format(config_list[0], config_list[1], config_list[2])  # gonna fix that a lil bit later
