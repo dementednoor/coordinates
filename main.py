@@ -9,6 +9,7 @@ fixed_longitude = 0.0
 fixed_height = 0
 rtk_port = 11111
 
+
 @app.route('/')  # opening the url http://*port_number*/ will call the data_print function:
 def data_print():
     # conf = _config_data_print()
@@ -20,22 +21,24 @@ def data_print():
 
 #  getting data from config:
 def _config_data_read():
+    global fixed_latitude, fixed_height, fixed_latitude, rtk_port, fixed_longitude
     with open('config.txt', 'r', encoding='utf-8') as f:
         text = f.read()
         space = re.compile('\n')  # regexp for one or more spaces to separate numbers form text file
 
-        config_list = space.split(text)[0:3]  # 2:5 are the only numbers we need (0 - date, 1 - time)
+        config_list = space.split(text)  # 2:5 are the only numbers we need (0 - date, 1 - time)
+        print(config_list)
         fixed_latitude = config_list[0]
         fixed_longitude = config_list[1]
         fixed_height = config_list[2]
-        rtk_port = config_list[3]
-    return true
+        #  rtk_port = config_list[3]
+    return True
 
 
 # getting data from port:
 def _port_data_print():
     host = socket.gethostname()
-    port = rtk_port
+    port = int(rtk_port)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # for ipv4 and reliable thread socket respectively
     s.connect((host, port))
     data = s.recv(1024)  # receiving up to 1024 bytes from our socket
@@ -49,6 +52,6 @@ def _port_data_print():
 
 
 if __name__ == '__main__':
-    if (_config_data_read() != true)
-      print('Error reading config')
+    if _config_data_read() != True:
+        print('Error reading config')
     app.run()
